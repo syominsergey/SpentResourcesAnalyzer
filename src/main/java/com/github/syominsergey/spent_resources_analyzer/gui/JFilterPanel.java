@@ -11,7 +11,6 @@ public class JFilterPanel extends JEnableRecursivePanel {
     JComboBox filterModeComboBox = new JComboBox();
     JComboBox categoryNameComboBox = new JComboBox();
     JComboBox categoryValueComboBox = new JComboBox();
-    JButton applyButton = new JButton("Применить");
 
     public JFilterPanel() {
         JPanel settingsPanel = new JEnableRecursivePanel(new GridLayout(3, 2));
@@ -23,9 +22,6 @@ public class JFilterPanel extends JEnableRecursivePanel {
         settingsPanel.add(categoryValueComboBox);
         setLayout(new BorderLayout());
         add(settingsPanel, BorderLayout.CENTER);
-        JPanel buttonsPanel = new JEnableRecursivePanel(new FlowLayout(FlowLayout.CENTER));
-        buttonsPanel.add(applyButton);
-        add(buttonsPanel, BorderLayout.SOUTH);
     }
 
     public static void main(String[] args) {
