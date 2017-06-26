@@ -2,8 +2,6 @@ package com.github.syominsergey.spent_resources_analyzer.sources.tables;
 
 import com.github.syominsergey.spent_resources_analyzer.sources.Note;
 import com.github.syominsergey.spent_resources_analyzer.sources.NoteReader;
-import com.github.syominsergey.spent_resources_analyzer.sources.tables.NoteReaderFromTable;
-import com.github.syominsergey.spent_resources_analyzer.sources.tables.TupleReaderFromTsv;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
