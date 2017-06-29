@@ -3,6 +3,8 @@ package com.github.syominsergey.spent_resources_analyzer.sources;
 import com.github.syominsergey.spent_resources_analyzer.sources.tables.NoteReaderFromTable;
 import com.github.syominsergey.spent_resources_analyzer.sources.tables.TupleReaderFromTsv;
 import org.apache.log4j.xml.DOMConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,6 +16,8 @@ import java.util.List;
  * Created by Sergey on 29.06.2017.
  */
 public class ActivityReaderImplTest {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ActivityReaderImplTest.class);
 
     public static void main(String[] args) throws IOException {
         DOMConfigurator.configure("log4j.xml");
@@ -43,7 +47,7 @@ public class ActivityReaderImplTest {
         );
         Activity activity = new ActivityImpl();
         while (activityReader.readNextActivity(activity)){
-            System.out.println(activity.toString());
+            LOG.debug(activity.toString());
         }
     }
 
