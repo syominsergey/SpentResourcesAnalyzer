@@ -2,7 +2,6 @@ package com.github.syominsergey.spent_resources_analyzer.sources;
 
 import com.github.syominsergey.spent_resources_analyzer.sources.tables.NoteReaderFromTable;
 import com.github.syominsergey.spent_resources_analyzer.sources.tables.TupleReaderFromTsv;
-import org.apache.log4j.xml.DOMConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,10 +16,10 @@ import java.util.List;
  */
 public class ActivityReaderImplTest {
 
+    //for log4j configuration pass vm param: -Dlog4j.configuration="file:log4j.xml"
     private static final Logger LOG = LoggerFactory.getLogger(ActivityReaderImplTest.class);
 
     public static void main(String[] args) throws IOException {
-        DOMConfigurator.configure("log4j.xml");
         String inputFileName = "sample.tsv";
         NoteReader noteReader = new NoteReaderFromTable(
                 new TupleReaderFromTsv(
