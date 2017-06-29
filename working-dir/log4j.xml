@@ -3,15 +3,32 @@
 <log4j:configuration debug="true"
                      xmlns:log4j='http://jakarta.apache.org/log4j/'>
 
-    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+    <appender name="console-system-out" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out"/>
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
+            <param name="ConversionPattern" value="%d{HH:mm:ss dd-MM-yyyy} %-5p - %m (at %c.%M(%F:%L))%n" />
         </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="DEBUG" />
+            <param name="LevelMax" value="INFO" />
+        </filter>
+    </appender>
+
+    <appender name="console-system-err" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.err"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{HH:mm:ss dd-MM-yyyy} %-5p - %m (at %c.%M(%F:%L))%n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="WARN" />
+            <param name="LevelMax" value="FATAL" />
+        </filter>
     </appender>
 
     <root>
         <!-- <level value="DEBUG" /> -->
-        <appender-ref ref="console" />
+        <appender-ref ref="console-system-out" />
+        <appender-ref ref="console-system-err" />
     </root>
 
 </log4j:configuration>
