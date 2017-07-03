@@ -15,7 +15,7 @@ public class ActivityReaderImpl implements ActivityReader {
     String attributeBlockBeginMarker;
     String attributeBlockEndMarker;
     String attributesSep;
-    String attributeNameValueSep;
+    List<String> attributeNameValueSeparators;
     String subCatSep;
 
     private final Logger LOG = LoggerFactory.getLogger(this.getClass());
@@ -26,14 +26,40 @@ public class ActivityReaderImpl implements ActivityReader {
             String attributeBlockBeginMarker,
             String attributeBlockEndMarker,
             String attributesSep,
-            String attributeNameValueSep,
+            String attributeNameValueSeparator,
+            String subCatSep
+    ) {
+        this(
+                noteReader,
+                attributeTypes,
+                attributeBlockBeginMarker,
+                attributeBlockEndMarker,
+                attributesSep,
+                Collections.singletonList(attributeNameValueSeparator),
+                subCatSep
+        );
+    }
+
+    public ActivityReaderImpl(
+            NoteReader noteReader,
+            List<AttributeType<?>> attributeTypes,
+            String attributeBlockBeginMarker,
+            String attributeBlockEndMarker,
+            String attributesSep,
+            List<String> attributeNameValueSeparators,
             String subCatSep
     ) {
         this.noteReader = noteReader;
         this.attributeBlockBeginMarker = attributeBlockBeginMarker;
         this.attributeBlockEndMarker = attributeBlockEndMarker;
         this.attributesSep = attributesSep;
-        this.attributeNameValueSep = attributeNameValueSep;
+        if(attributeNameValueSeparators == null){
+            throw new NullPointerException("Параметр attributeNameValueSeparators не должен быть null!");
+        }
+        if (attributeNameValueSeparators.isEmpty()) {
+            throw new IllegalArgumentException("Список attributeNameValueSeparators должен содержать хотя бы 1 элемент, но он пуст!");
+        }
+        this.attributeNameValueSeparators = attributeNameValueSeparators;
         this.subCatSep = subCatSep;
         for (AttributeType<?> attributeType : attributeTypes) {
             attributeContexts.put(
@@ -97,14 +123,20 @@ public class ActivityReaderImpl implements ActivityReader {
         String[] attributeStrings = attributesSubstring.split(attributesSep);
         for (int i = 0; i < attributeStrings.length; i++) {
             String attributeString = attributeStrings[i];
-            String[] nameValue = attributeString.split(attributeNameValueSep);
+            String[] nameValue = null;
+            for (String attributeNameValueSeparator : attributeNameValueSeparators) {
+                nameValue = attributeString.split(attributeNameValueSeparator);
+                if(nameValue.length == 2){
+                    break;
+                }
+            }
             if(nameValue.length != 2){
                 LOG.warn(
                         "При разборе заголовка '{}' обнаружена строка атрибута '{}', которая не разделяется с помощью " +
-                                "сепаратора '{}' на имя и значение, т.к. в результате имеем {} элемент(а/ов)",
+                                "сепараторов '{}' на имя и значение, т.к. в результате имеем кол-во элементов, отличное от 2",
                         noteTitle,
                         attributeString,
-                        attributeNameValueSep,
+                        attributeNameValueSeparators,
                         nameValue.length
                 );
                 continue;
