@@ -5,4 +5,5 @@ package com.github.syominsergey.spent_resources_analyzer.sources;
  */
 public interface Formatter<T> {
     String format(T value);
+    Class<T> getType();
 }

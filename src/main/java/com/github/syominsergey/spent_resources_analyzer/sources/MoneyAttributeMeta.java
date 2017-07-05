@@ -3,23 +3,33 @@ package com.github.syominsergey.spent_resources_analyzer.sources;
 /**
  * Created by Sergey on 29.06.2017.
  */
-public class MoneyAttributeType extends IntType implements AttributeType<Integer> {
+public class MoneyAttributeMeta implements AttributeMeta<Integer> {
 
     String name;
     String moneySign;
 
-    public MoneyAttributeType(String name, String moneySign) {
+    public MoneyAttributeMeta(String name, String moneySign) {
         this.name = name;
         this.moneySign = moneySign;
     }
 
-    public MoneyAttributeType() {
+    public MoneyAttributeMeta() {
         this("стоимость", "р");
     }
 
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public Class<Integer> getType() {
+        return Integer.class;
+    }
+
+    @Override
+    public Acc<Integer> createAcc() {
+        return new IntAcc();
     }
 
     @Override
@@ -34,7 +44,7 @@ public class MoneyAttributeType extends IntType implements AttributeType<Integer
 
     @Override
     public String toString() {
-        return "MoneyAttributeType{" +
+        return "MoneyAttributeMeta{" +
                 "name='" + name + '\'' +
                 '}';
     }

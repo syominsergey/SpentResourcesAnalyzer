@@ -18,4 +18,9 @@ public class MoneyFormatter implements Formatter<Integer> {
         sb.append(moneySign);
         return sb.toString();
     }
+
+    @Override
+    public Class<Integer> getType() {
+        return Integer.class;
+    }
 }

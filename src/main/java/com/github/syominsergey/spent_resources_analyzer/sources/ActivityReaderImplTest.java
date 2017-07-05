@@ -33,12 +33,12 @@ public class ActivityReaderImplTest {
                 2,
                 ", "
         );
-        List<AttributeType<?>> attributeTypes = new ArrayList<>();
-        attributeTypes.add(new MoneyAttributeType());
-        attributeTypes.add(new TimeAttributeType());
+        List<AttributeMeta<?>> attributeMetas = new ArrayList<>();
+        attributeMetas.add(new MoneyAttributeMeta());
+        attributeMetas.add(new TimeAttributeMeta());
         ActivityReader activityReader = new ActivityReaderImpl(
                 noteReader,
-                attributeTypes,
+                attributeMetas,
                 " (",
                 ")",
                 ", ",

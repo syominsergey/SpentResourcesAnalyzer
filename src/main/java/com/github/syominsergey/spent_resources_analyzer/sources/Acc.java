@@ -6,4 +6,5 @@ package com.github.syominsergey.spent_resources_analyzer.sources;
 public interface Acc<T> {
     void add(T val);
     T getSum();
+    Class<T> getType();
 }

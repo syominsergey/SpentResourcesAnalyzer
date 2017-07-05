@@ -5,4 +5,5 @@ package com.github.syominsergey.spent_resources_analyzer.sources;
  */
 public interface Parser<T> {
     T parse(String s);
+    Class<T> getType();
 }

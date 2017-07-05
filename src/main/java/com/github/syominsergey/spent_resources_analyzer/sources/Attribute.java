@@ -5,5 +5,5 @@ package com.github.syominsergey.spent_resources_analyzer.sources;
  */
 public interface Attribute<T> {
     T getValue();
-    AttributeType<T> getType();
+    AttributeMeta<T> getMeta();
 }

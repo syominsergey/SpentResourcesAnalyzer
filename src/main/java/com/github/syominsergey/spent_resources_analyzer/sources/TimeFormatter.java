@@ -28,4 +28,9 @@ public class TimeFormatter implements Formatter<Integer> {
         }
         return sb.toString();
     }
+
+    @Override
+    public Class<Integer> getType() {
+        return Integer.class;
+    }
 }

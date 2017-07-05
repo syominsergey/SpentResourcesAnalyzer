@@ -22,7 +22,7 @@ public class ActivityReaderImpl implements ActivityReader {
 
     public ActivityReaderImpl(
             NoteReader noteReader,
-            List<AttributeType<?>> attributeTypes,
+            List<AttributeMeta<?>> attributeMetas,
             String attributeBlockBeginMarker,
             String attributeBlockEndMarker,
             String attributesSep,
@@ -31,7 +31,7 @@ public class ActivityReaderImpl implements ActivityReader {
     ) {
         this(
                 noteReader,
-                attributeTypes,
+                attributeMetas,
                 attributeBlockBeginMarker,
                 attributeBlockEndMarker,
                 attributesSep,
@@ -42,7 +42,7 @@ public class ActivityReaderImpl implements ActivityReader {
 
     public ActivityReaderImpl(
             NoteReader noteReader,
-            List<AttributeType<?>> attributeTypes,
+            List<AttributeMeta<?>> attributeMetas,
             String attributeBlockBeginMarker,
             String attributeBlockEndMarker,
             String attributesSep,
@@ -61,30 +61,30 @@ public class ActivityReaderImpl implements ActivityReader {
         }
         this.attributeNameValueSeparators = attributeNameValueSeparators;
         this.subCatSep = subCatSep;
-        for (AttributeType<?> attributeType : attributeTypes) {
+        for (AttributeMeta<?> attributeMeta : attributeMetas) {
             attributeContexts.put(
-                    attributeType.getName(),
-                    AttributeContext.create(attributeType)
+                    attributeMeta.getName(),
+                    AttributeContext.create(attributeMeta)
             );
         }
     }
 
     private static class AttributeContext<T> {
-        public AttributeType<T> attributeType;
+        public AttributeMeta<T> attributeMeta;
         public Parser<T> parser;
 
-        public static <T> AttributeContext<T> create(AttributeType<T> attributeType){
-            return new AttributeContext<T>(attributeType, attributeType.createParser());
+        public static <T> AttributeContext<T> create(AttributeMeta<T> attributeMeta){
+            return new AttributeContext<T>(attributeMeta, attributeMeta.createParser());
         }
 
-        public AttributeContext(AttributeType<T> attributeType, Parser<T> parser) {
-            this.attributeType = attributeType;
+        public AttributeContext(AttributeMeta<T> attributeMeta, Parser<T> parser) {
+            this.attributeMeta = attributeMeta;
             this.parser = parser;
         }
 
         public Attribute<T> parse(String s){
             T value = parser.parse(s);
-            return new AttributeImpl<T>(value, attributeType);
+            return new AttributeImpl<T>(value, attributeMeta);
         }
     }
 
@@ -215,18 +215,18 @@ public class ActivityReaderImpl implements ActivityReader {
     public static class AttributeImpl<T> implements Attribute<T> {
 
         protected T value;
-        protected AttributeType<T> type;
+        protected AttributeMeta<T> meta;
 
-        public AttributeImpl(T value, AttributeType<T> type) {
+        public AttributeImpl(T value, AttributeMeta<T> meta) {
             this.value = value;
-            this.type = type;
+            this.meta = meta;
         }
 
         public T getValue() {
             return null;
         }
 
-        public AttributeType<T> getType() {
+        public AttributeMeta<T> getMeta() {
             return null;
         }
 
@@ -234,7 +234,7 @@ public class ActivityReaderImpl implements ActivityReader {
         public String toString() {
             return "AttributeImpl{" +
                     "value=" + value +
-                    ", type=" + type +
+                    ", meta=" + meta +
                     '}';
         }
     }

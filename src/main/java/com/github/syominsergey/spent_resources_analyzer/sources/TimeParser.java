@@ -47,4 +47,9 @@ public class TimeParser implements Parser<Integer> {
         }
         return totalMinutes;
     }
+
+    @Override
+    public Class<Integer> getType() {
+        return Integer.class;
+    }
 }

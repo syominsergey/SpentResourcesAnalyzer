@@ -30,4 +30,9 @@ public class MoneyParser implements Parser<Integer> {
         int value = Integer.parseInt(s);
         return value;
     }
+
+    @Override
+    public Class<Integer> getType() {
+        return Integer.class;
+    }
 }
