@@ -29,7 +29,7 @@ class Activity implements AttributeAggregator {
         }
         if(!attributeAcc.getType().isAssignableFrom(attribute.getMeta().getType())){
             LOG.warn(
-                    "В действии {} атрибут с именем {} имеет тип значения {}, но пришедший аккумулятор для этого имени именем" +
+                    "В действии {} атрибут с именем {} имеет тип значения {}, но пришедший аккумулятор для этого имени" +
                             " имеет тип значения {}, к которому тип атрибута не может быть приведён",
                     name,
                     attribute.getMeta().getName(),
