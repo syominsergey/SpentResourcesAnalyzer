@@ -19,28 +19,39 @@ public class TimeParser implements Parser<Integer> {
     private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public Integer parse(String s) {
+    public Integer parse(String s, boolean strict) {
         int totalMinutes = 0;
         int startPos = 0;
         int nextSignPos = s.indexOf(hoursSign, startPos);
+        boolean hoursDefined;
         if(nextSignPos != -1){
             String hoursSubstring = s.substring(0, nextSignPos);
             int hours = Integer.parseInt(hoursSubstring);
             totalMinutes += hours * 60;
             startPos = nextSignPos + hoursSign.length();
+            hoursDefined = true;
+        } else {
+            hoursDefined = false;
         }
         if (startPos < s.length()) {
             nextSignPos = s.indexOf(minutesSign, startPos);
-            if(nextSignPos == -1){
-                LOG.warn(
-                        "Строка {} содержит знаки после символа часов {}, но не содержит в конце знака минут {}",
+            String minutesSubstring;
+            if(nextSignPos != -1){
+                minutesSubstring = s.substring(startPos, nextSignPos);
+            } else {
+                minutesSubstring = s.substring(startPos, s.length());
+                String msg = String.format(
+                        "Строка '%s' содержит знаки '%s', относящиеся к минутам, но не содержит в конце самого знака минут '%s'",
                         s,
-                        hoursSign,
+                        minutesSubstring,
                         minutesSign
                 );
-                nextSignPos = s.length();
+                if(strict && !hoursDefined){
+                    throw new RuntimeException(msg);
+                } else {
+                    LOG.warn(msg);
+                }
             }
-            String minutesSubstring = s.substring(startPos, nextSignPos);
             minutesSubstring = minutesSubstring.trim();
             int minutes = Integer.parseInt(minutesSubstring);
             totalMinutes += minutes;

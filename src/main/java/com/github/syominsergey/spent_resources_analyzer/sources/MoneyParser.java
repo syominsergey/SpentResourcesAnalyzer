@@ -17,15 +17,20 @@ public class MoneyParser implements Parser<Integer> {
     private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public Integer parse(String s) {
+    public Integer parse(String s, boolean strict) {
         if(s.endsWith(moneySign)){
             s = s.substring(0, s.length() - moneySign.length());
         } else {
-            LOG.warn(
-                    "Текст {}, описывающий денежную сумму, не оканчивается на знак валюты {}",
+            String msg = String.format(
+                    "Текст '%s', описывающий денежную сумму, не оканчивается на знак валюты '%s'",
                     s,
                     moneySign
             );
+            if(strict){
+                throw new RuntimeException(msg);
+            } else {
+                LOG.warn(msg);
+            }
         }
         int value = Integer.parseInt(s);
         return value;
