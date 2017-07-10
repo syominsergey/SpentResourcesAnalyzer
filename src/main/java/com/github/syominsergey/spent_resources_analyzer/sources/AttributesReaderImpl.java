@@ -49,7 +49,7 @@ public class AttributesReaderImpl<AttributeId> implements AttributesReader {
             if (rollingAttributeIds.contains(attributeId)) {
                 LOG.warn(
                         "Атрибут '{}' под номером {} в строке атрибутов '{}' получил идентфиикатор '{}'," +
-                        " который содержится в списке повторяюющихся. Пропускаем.",
+                        " который содержится в списке повторяющихся. Пропускаем.",
                         attributeString, i, sourceString, attributeId
                 );
                 continue;
@@ -60,8 +60,8 @@ public class AttributesReaderImpl<AttributeId> implements AttributesReader {
             }
             String msg = String.format(
                     "Для атрибута '%s' под номером %d в строке атрибутов '%s' получен идентификатор" +
-                            "'%s', который уже ранее применялся для атрибута '%s' в данной строке атрибутов," +
-                            "что ведёт к неоднозначности. Атрибуты по данному идентификатору не будут учтены",
+                            " '%s', который уже ранее применялся для атрибута '%s' в данной строке атрибутов," +
+                            " что ведёт к неоднозначности. Атрибуты по данному идентификатору не будут учтены",
                     attributeString,
                     i,
                     sourceString,
