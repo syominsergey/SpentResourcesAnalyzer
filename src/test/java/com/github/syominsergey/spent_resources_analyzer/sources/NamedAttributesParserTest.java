@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Sergey on 06.07.2017.
  */
-public class NamedAttributesReaderTest {
+public class NamedAttributesParserTest {
 
     private MoneyAttributeMeta moneyAttributeMeta = new MoneyAttributeMeta();
     private final TimeAttributeMeta timeAttributeMeta = new TimeAttributeMeta();
@@ -35,8 +35,12 @@ public class NamedAttributesReaderTest {
             List<AttributeMeta<?>> attributeMetas = new ArrayList<>();
             attributeMetas.add(moneyAttributeMeta);
             attributeMetas.add(timeAttributeMeta);
-            AttributesReader attributesReader = new NamedAttributesReader(
-                    attributeMetas, ", ", Arrays.asList(": ", " ")
+            AttributeParser<String> attributeParser = new NamedAttributesParser(
+                    attributeMetas,
+                    Arrays.asList(": ", " ")
+            );
+            AttributesReader attributesReader = new AttributesReaderImpl<>(
+                    attributeParser, ", "
             );
             return attributesReader;
         }

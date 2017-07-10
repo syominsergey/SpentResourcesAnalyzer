@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by Sergey on 28.06.2017.
  */
-public class MoneyParser implements Parser<Integer> {
+public class MoneyParser implements ElementaryParser<Integer> {
 
     String moneySign;
 
@@ -39,5 +39,27 @@ public class MoneyParser implements Parser<Integer> {
     @Override
     public Class<Integer> getType() {
         return Integer.class;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MoneyParser that = (MoneyParser) o;
+
+        return moneySign != null ? moneySign.equals(that.moneySign) : that.moneySign == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return moneySign != null ? moneySign.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "MoneyParser{" +
+                "moneySign='" + moneySign + '\'' +
+                '}';
     }
 }

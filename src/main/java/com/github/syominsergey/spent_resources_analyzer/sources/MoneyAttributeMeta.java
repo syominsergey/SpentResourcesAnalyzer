@@ -33,7 +33,7 @@ public class MoneyAttributeMeta implements AttributeMeta<Integer> {
     }
 
     @Override
-    public Parser<Integer> createParser() {
+    public ElementaryParser<Integer> createParser() {
         return new MoneyParser(moneySign);
     }
 

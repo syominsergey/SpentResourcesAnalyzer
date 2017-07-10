@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by Sergey on 29.06.2017.
  */
-public class TimeParser implements Parser<Integer> {
+public class TimeParser implements ElementaryParser<Integer> {
 
     String hoursSign;
     String minutesSign;
@@ -62,5 +62,31 @@ public class TimeParser implements Parser<Integer> {
     @Override
     public Class<Integer> getType() {
         return Integer.class;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TimeParser that = (TimeParser) o;
+
+        if (hoursSign != null ? !hoursSign.equals(that.hoursSign) : that.hoursSign != null) return false;
+        return minutesSign != null ? minutesSign.equals(that.minutesSign) : that.minutesSign == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = hoursSign != null ? hoursSign.hashCode() : 0;
+        result = 31 * result + (minutesSign != null ? minutesSign.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "TimeParser{" +
+                "hoursSign='" + hoursSign + '\'' +
+                ", minutesSign='" + minutesSign + '\'' +
+                '}';
     }
 }

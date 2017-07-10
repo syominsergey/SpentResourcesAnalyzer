@@ -7,6 +7,6 @@ public interface AttributeMeta<T> {
     String getName();
     Class<T> getType();
     Acc<T> createAcc();
-    Parser<T> createParser();
+    ElementaryParser<T> createParser();
     Formatter<T> createFormatter();
 }
