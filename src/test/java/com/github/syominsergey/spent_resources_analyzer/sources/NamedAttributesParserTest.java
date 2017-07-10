@@ -119,4 +119,22 @@ public class NamedAttributesParserTest {
         checker.check();
     }
 
+    @Test
+    public void readAttributes10() throws Exception {
+        LOG.debug("starting test");
+        ReadAttributesCheckerAbstract checker = new ReadAttributesChecker(
+                "время: 3ч, время: 5ч10м"
+        );
+        checker.check();
+    }
+
+    @Test
+    public void readAttributes11() throws Exception {
+        LOG.debug("starting test");
+        ReadAttributesCheckerAbstract checker = new ReadAttributesChecker(
+                "время: 3ч, время: 5ч10м, время: 50м"
+        );
+        checker.check();
+    }
+
 }
