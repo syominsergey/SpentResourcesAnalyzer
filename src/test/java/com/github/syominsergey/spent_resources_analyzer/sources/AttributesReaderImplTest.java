@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Sergey on 06.07.2017.
  */
-public class NamedAttributesParserTest {
+public class AttributesReaderImplTest {
 
     private MoneyAttributeMeta moneyAttributeMeta = new MoneyAttributeMeta();
     private final TimeAttributeMeta timeAttributeMeta = new TimeAttributeMeta();
@@ -35,12 +35,19 @@ public class NamedAttributesParserTest {
             List<AttributeMeta<?>> attributeMetas = new ArrayList<>();
             attributeMetas.add(moneyAttributeMeta);
             attributeMetas.add(timeAttributeMeta);
-            AttributeParser<String> attributeParser = new NamedAttributesParser(
+            AttributeParser<String> namedAttributesParser = new NamedAttributesParser(
                     attributeMetas,
                     Arrays.asList(": ", " ")
             );
-            AttributesReader attributesReader = new AttributesReaderImpl<>(
-                    attributeParser, ", "
+            AttributeParser<ElementaryParser<?>> typedAttributesParser = new TypedAttributesParser(
+                    attributeMetas
+            );
+            List<AttributeParser<?>> parsers = new ArrayList<>();
+            parsers.add(namedAttributesParser);
+            parsers.add(typedAttributesParser);
+            AttributesReader attributesReader = new AttributesReaderImpl(
+                    parsers,
+                    ", "
             );
             return attributesReader;
         }
@@ -102,6 +109,8 @@ public class NamedAttributesParserTest {
     public void readAttributes7() throws Exception {
         LOG.debug("starting test");
         ReadAttributesCheckerAbstract checker = new ReadAttributesChecker("153р, 1ч10м");
+        checker.addExpectedAttribute(153, moneyAttributeMeta);
+        checker.addExpectedAttribute(70, timeAttributeMeta);
         checker.check();
     }
 
@@ -109,6 +118,7 @@ public class NamedAttributesParserTest {
     public void readAttributes8() throws Exception {
         LOG.debug("starting test");
         ReadAttributesCheckerAbstract checker = new ReadAttributesChecker("288р");
+        checker.addExpectedAttribute(288, moneyAttributeMeta);
         checker.check();
     }
 
@@ -116,6 +126,7 @@ public class NamedAttributesParserTest {
     public void readAttributes9() throws Exception {
         LOG.debug("starting test");
         ReadAttributesCheckerAbstract checker = new ReadAttributesChecker("3ч");
+        checker.addExpectedAttribute(180, timeAttributeMeta);
         checker.check();
     }
 
@@ -133,6 +144,24 @@ public class NamedAttributesParserTest {
         LOG.debug("starting test");
         ReadAttributesCheckerAbstract checker = new ReadAttributesChecker(
                 "время: 3ч, время: 5ч10м, время: 50м"
+        );
+        checker.check();
+    }
+
+    @Test
+    public void readAttributes12() throws Exception {
+        LOG.debug("starting test");
+        ReadAttributesCheckerAbstract checker = new ReadAttributesChecker(
+                "199р, 214р"
+        );
+        checker.check();
+    }
+
+    @Test
+    public void readAttributes13() throws Exception {
+        LOG.debug("starting test");
+        ReadAttributesCheckerAbstract checker = new ReadAttributesChecker(
+                "224р, 7р, 10р"
         );
         checker.check();
     }

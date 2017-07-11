@@ -8,27 +8,34 @@ import java.util.*;
 /**
  * Created by Sergey on 09.07.2017.
  */
-public class AttributesReaderImpl<AttributeId> implements AttributesReader {
+public class AttributesReaderImpl implements AttributesReader {
 
     String attributesSep;
-    AttributeParser<AttributeId> attributeParser;
+    List<AttributeParser<?>> attributeParsers;
 
     public AttributesReaderImpl(
-            AttributeParser<AttributeId> attributeParser,
+            List<AttributeParser<?>> attributeParsers,
             String attributesSep
     ) {
-        this.attributeParser = attributeParser;
+        this.attributeParsers = attributeParsers;
         this.attributesSep = attributesSep;
+    }
+
+    public AttributesReaderImpl(
+            AttributeParser<?> attributeParser,
+            String attributesSep
+    ) {
+        this(Collections.singletonList(attributeParser), attributesSep);
     }
 
     private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
-    MarkedAttributeImpl<AttributeId> markedAttribute = new MarkedAttributeImpl<AttributeId>();
-
-    @Override
-    public void readAttributes(String sourceString, List<Attribute<?>> attributesOut) {
-        attributesOut.clear();
-        String[] attributeStrings = sourceString.split(attributesSep);
+    protected <AttributeId> Map<AttributeId, Attribute<?>> readAttributesWithSpecialParser(
+            String sourceString,
+            String[] attributeStrings,
+            AttributeParser<AttributeId> attributeParser
+    ){
+        MarkedAttributeImpl<AttributeId> markedAttribute = new MarkedAttributeImpl<AttributeId>();
         Map<AttributeId, Attribute<?>> attributes = new HashMap<>();
         Set<AttributeId> rollingAttributeIds = new HashSet<>();
         for (int i = 0; i < attributeStrings.length; i++) {
@@ -48,8 +55,8 @@ public class AttributesReaderImpl<AttributeId> implements AttributesReader {
             AttributeId attributeId = markedAttribute.getAttributeId();
             if (rollingAttributeIds.contains(attributeId)) {
                 LOG.warn(
-                        "Атрибут '{}' под номером {} в строке атрибутов '{}' получил идентфиикатор '{}'," +
-                        " который содержится в списке повторяющихся. Пропускаем.",
+                        "Атрибут '{}' под номером {} в строке атрибутов '{}' получил идентификатор '{}'," +
+                                " который содержится в списке повторяющихся. Пропускаем.",
                         attributeString, i, sourceString, attributeId
                 );
                 continue;
@@ -72,8 +79,21 @@ public class AttributesReaderImpl<AttributeId> implements AttributesReader {
             attributes.remove(attributeId);
             rollingAttributeIds.add(attributeId);
         }
-        for (Attribute<?> attribute : attributes.values()) {
-            attributesOut.add(attribute);
+        return attributes;
+    }
+
+    @Override
+    public void readAttributes(String sourceString, List<Attribute<?>> attributesOut) {
+        attributesOut.clear();
+        String[] attributeStrings = sourceString.split(attributesSep);
+        for (AttributeParser<?> attributeParser : attributeParsers) {
+            Map<?, Attribute<?>> attributes = readAttributesWithSpecialParser(sourceString, attributeStrings, attributeParser);
+            if(!attributes.isEmpty()){
+                for (Attribute<?> attribute : attributes.values()) {
+                    attributesOut.add(attribute);
+                }
+                break;
+            }
         }
     }
 }

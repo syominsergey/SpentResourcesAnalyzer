@@ -36,12 +36,18 @@ public class ActivityReaderImplRunner {
         List<AttributeMeta<?>> attributeMetas = new ArrayList<>();
         attributeMetas.add(new MoneyAttributeMeta());
         attributeMetas.add(new TimeAttributeMeta());
-        AttributeParser<String> attributeParser = new NamedAttributesParser(
+        AttributeParser<String> namedAttributesParser = new NamedAttributesParser(
                 attributeMetas,
                 Arrays.asList(": ", " ")
         );
-        AttributesReader attributesReader = new AttributesReaderImpl<>(
-                attributeParser,
+        AttributeParser<ElementaryParser<?>> typedAttributesParser = new TypedAttributesParser(
+                attributeMetas
+        );
+        List<AttributeParser<?>> parsers = new ArrayList<>();
+        parsers.add(namedAttributesParser);
+        parsers.add(typedAttributesParser);
+        AttributesReader attributesReader = new AttributesReaderImpl(
+                parsers,
                 ", "
         );
         ActivityReader activityReader = new ActivityReaderImpl(

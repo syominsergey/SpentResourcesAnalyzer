@@ -62,6 +62,7 @@ public class TypedAttributesParser implements AttributeParser<ElementaryParser<?
                 Attribute attribute = new AttributeImpl(entry.getValue(), parsers.get(entry.getKey()));
                 markedAttribute.setAttribute(attribute);
                 markedAttribute.setAttributeId(entry.getKey());
+                return;
             }
             default:{
                 String msg = String.format(
