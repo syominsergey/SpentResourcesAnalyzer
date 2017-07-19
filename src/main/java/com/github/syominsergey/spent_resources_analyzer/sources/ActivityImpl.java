@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Sergey on 05.07.2017.
  */
-class ActivityImpl implements Activity {
+public class ActivityImpl implements Activity {
 
     String title;
 
