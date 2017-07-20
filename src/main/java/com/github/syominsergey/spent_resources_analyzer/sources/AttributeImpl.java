@@ -28,4 +28,22 @@ public class AttributeImpl<T> implements Attribute<T> {
                 ", meta=" + meta +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AttributeImpl<?> attribute = (AttributeImpl<?>) o;
+
+        if (value != null ? !value.equals(attribute.value) : attribute.value != null) return false;
+        return meta != null ? meta.equals(attribute.meta) : attribute.meta == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = value != null ? value.hashCode() : 0;
+        result = 31 * result + (meta != null ? meta.hashCode() : 0);
+        return result;
+    }
 }

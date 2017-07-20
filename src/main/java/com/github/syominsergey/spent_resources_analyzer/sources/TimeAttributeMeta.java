@@ -50,4 +50,24 @@ public class TimeAttributeMeta implements AttributeMeta<Integer> {
                 "name='" + name + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TimeAttributeMeta that = (TimeAttributeMeta) o;
+
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (hoursSign != null ? !hoursSign.equals(that.hoursSign) : that.hoursSign != null) return false;
+        return minutesSign != null ? minutesSign.equals(that.minutesSign) : that.minutesSign == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (hoursSign != null ? hoursSign.hashCode() : 0);
+        result = 31 * result + (minutesSign != null ? minutesSign.hashCode() : 0);
+        return result;
+    }
 }
