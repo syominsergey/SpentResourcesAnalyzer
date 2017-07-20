@@ -7,6 +7,15 @@ import java.util.List;
  */
 public class ActivityImpl implements Activity {
 
+    public ActivityImpl(String title, List<Attribute<?>> attributes, List<List<String>> categories) {
+        this.title = title;
+        this.attributes = attributes;
+        this.categories = categories;
+    }
+
+    public ActivityImpl() {
+    }
+
     String title;
 
     @Override
