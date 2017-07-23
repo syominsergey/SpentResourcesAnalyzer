@@ -51,4 +51,12 @@ class Activity implements AttributeAggregator {
         }
         ((Acc)attributeAcc).add(attribute.getValue());
     }
+
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "name='" + name + '\'' +
+                ", attributes=" + attributes +
+                '}';
+    }
 }

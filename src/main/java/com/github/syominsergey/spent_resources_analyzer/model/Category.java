@@ -1,7 +1,6 @@
 package com.github.syominsergey.spent_resources_analyzer.model;
 
 import com.github.syominsergey.spent_resources_analyzer.sources.Acc;
-import com.github.syominsergey.spent_resources_analyzer.sources.AttributeMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,5 +39,12 @@ class Category implements AttributeAggregator {
         for (Activity activity : activities) {
             activity.aggregate(attributeName, attributeAcc);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }
