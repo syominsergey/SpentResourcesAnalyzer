@@ -11,18 +11,18 @@ import java.util.*;
 public class ActivityAdapter {
     String title;
     Set<Attribute<?>> attributes;
-    boolean fromSource;
+    boolean isExpected;
 
-    public ActivityAdapter(ActivityImpl activity) {
+    public ActivityAdapter(ActivityImpl activity, boolean isExpected) {
         this.title = activity.getTitle();
         this.attributes = new HashSet<>(activity.getAttributes());
-        this.fromSource = true;
+        this.isExpected = isExpected;
     }
 
-    public ActivityAdapter(Activity activity) {
+    public ActivityAdapter(Activity activity, boolean isExpected) {
         this.title = activity.name;
         this.attributes = new HashSet<>(activity.attributes.values());
-        this.fromSource = false;
+        this.isExpected = isExpected;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ActivityAdapter {
         return "ActivityAdapter{" +
                 "title='" + title + '\'' +
                 ", attributes=" + attributes +
-                ", fromSource=" + fromSource +
+                ", isExpected=" + isExpected +
                 '}';
     }
 }

@@ -14,21 +14,6 @@ public class ModelLoadActivitiesTest {
 
     private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
-    protected static class Checker extends ModelLoadActivitiesCheckerAbstract {
-
-        public Checker(
-                List<ActivityImpl> sourceActivities,
-                Map<List<String>, List<Activity>> arrangedActivities
-        ) {
-            super(sourceActivities, arrangedActivities);
-        }
-
-        @Override
-        protected Model createModel() {
-            return new ModelImpl();
-        }
-    }
-
     @Test
     public void test1() throws Exception {
         AttributeMeta<Integer> moneyMeta = new MoneyAttributeMeta();
@@ -67,8 +52,8 @@ public class ModelLoadActivitiesTest {
                 "4",
                 Collections.emptyList(),
                 Arrays.asList(
-                        Arrays.asList("a", "c", "d"),
-                        Arrays.asList("a", "d", "e", "f")
+                        Arrays.asList("a", "c", "d")
+                        , Arrays.asList("a", "d", "e", "f")
                 )
         ));
         HashMap<List<String>, List<Activity>> arrangedActivities = new HashMap<>();
@@ -142,7 +127,7 @@ public class ModelLoadActivitiesTest {
                         )
                 )
         );
-        new Checker(
+        new ModelLoadActivitiesChecker(
                 sourceActivities,
                 arrangedActivities
         ).check();
