@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * Created by Sergey on 04.07.2017.
  */
-class Activity implements AttributeAggregator {
+class Activity {
 
     String name;
 
@@ -31,26 +31,6 @@ class Activity implements AttributeAggregator {
     }
 
     private final Logger LOG = LoggerFactory.getLogger(this.getClass());
-
-    @Override
-    public void aggregate(String attributeName, Acc<?> attributeAcc){
-        Attribute<?> attribute = attributes.get(attributeName);
-        if(attribute == null){
-            return;
-        }
-        if(!attributeAcc.getType().isAssignableFrom(attribute.getMeta().getType())){
-            LOG.warn(
-                    "В действии {} атрибут с именем {} имеет тип значения {}, но пришедший аккумулятор для этого имени" +
-                            " имеет тип значения {}, к которому тип атрибута не может быть приведён",
-                    name,
-                    attribute.getMeta().getName(),
-                    attribute.getMeta().getType(),
-                    attributeAcc.getType()
-            );
-            return;
-        }
-        ((Acc)attributeAcc).add(attribute.getValue());
-    }
 
     @Override
     public String toString() {

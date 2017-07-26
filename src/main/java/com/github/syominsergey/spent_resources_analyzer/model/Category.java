@@ -1,7 +1,5 @@
 package com.github.syominsergey.spent_resources_analyzer.model;
 
-import com.github.syominsergey.spent_resources_analyzer.sources.Acc;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +8,7 @@ import java.util.Map;
 /**
  * Created by Sergey on 04.07.2017.
  */
-class Category implements AttributeAggregator {
+class Category implements InspectorConductor {
 
     public Category(String name, Category superCategory) {
         this.name = name;
@@ -32,12 +30,12 @@ class Category implements AttributeAggregator {
     List<Activity> activities;
 
     @Override
-    public void aggregate(String attributeName, Acc<?> attributeAcc) {
+    public void conduct(ActivityInspector inspector) {
         for (Category category : subCategories.values()) {
-            category.aggregate(attributeName, attributeAcc);
+            category.conduct(inspector);
         }
         for (Activity activity : activities) {
-            activity.aggregate(attributeName, attributeAcc);
+            inspector.inspectNextActivity(activity);
         }
     }
 
