@@ -1,5 +1,8 @@
 package com.github.syominsergey.spent_resources_analyzer.model;
 
+import com.github.syominsergey.spent_resources_analyzer.sources.Acc;
+import com.github.syominsergey.spent_resources_analyzer.sources.AttributeMeta;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +40,33 @@ class Category implements InspectorConductor {
         for (Activity activity : activities) {
             inspector.inspectNextActivity(activity);
         }
+    }
+
+    public <T> T computeAttributeSum(AttributeMeta<T> attributeMeta){
+        return computeAttributeSum(attributeMeta, null);
+    }
+
+    public <T> T computeAttributeSum(AttributeMeta<T> attributeMeta, ActivityChecker activityChecker){
+        Acc<T> attributeAcc = attributeMeta.createAcc();
+        String attributeName = attributeMeta.getName();
+        ActivityInspector activityInspector = new AttributeSummator(attributeName, attributeAcc);
+        if (activityChecker != null) {
+            activityInspector = new InspectorWall(activityInspector, activityChecker);
+        }
+        conduct(activityInspector);
+        return attributeAcc.getSum();
+    }
+
+    public Category getSubCategory(List<String> subCategoryName){
+        Category curCategory = this;
+        for (String s : subCategoryName) {
+            Category subCategory = curCategory.subCategories.get(s);
+            if(subCategory == null){
+                return null;
+            }
+            curCategory = subCategory;
+        }
+        return curCategory;
     }
 
     @Override
