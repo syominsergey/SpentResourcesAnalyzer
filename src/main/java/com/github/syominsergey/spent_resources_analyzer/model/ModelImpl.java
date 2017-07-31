@@ -42,6 +42,7 @@ public class ModelImpl implements Model {
         }
     }
 
+    @Override
     public <T> Map<String, T> computeAttributeSumBySubCategories(
             AttributeMeta<T> attributeMeta,
             List<String> subCategoryToAnalyze,

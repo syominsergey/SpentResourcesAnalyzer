@@ -19,6 +19,4 @@ public class ActivityFilterBySubcatPresence {
         this.mode = mode;
     }
 
-    public ActivityFilterBySubcatPresence() {
-    }
 }
