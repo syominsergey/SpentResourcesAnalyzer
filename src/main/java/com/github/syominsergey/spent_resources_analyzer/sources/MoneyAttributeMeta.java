@@ -1,5 +1,7 @@
 package com.github.syominsergey.spent_resources_analyzer.sources;
 
+import java.util.Comparator;
+
 /**
  * Created by Sergey on 29.06.2017.
  */
@@ -40,6 +42,11 @@ public class MoneyAttributeMeta implements AttributeMeta<Integer> {
     @Override
     public Formatter<Integer> createFormatter() {
         return new MoneyFormatter(moneySign);
+    }
+
+    @Override
+    public Comparator<Integer> createComparator() {
+        return new ComparableComparator<>();
     }
 
     @Override

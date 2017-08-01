@@ -41,13 +41,19 @@ public class Main {
             activityFilter = null;
         }
         Map<String, T> report = model.computeAttributeSumBySubCategories(attributeMeta, subCat, activityFilter);
-        Formatter<T> formatter = attributeMeta.createFormatter();
+        List<Pair<String, T>> reportList = new ArrayList<>();
         for (Map.Entry<String, T> entry : report.entrySet()) {
-            String name = entry.getKey();
-            T value = entry.getValue();
+            reportList.add(new Pair<>(entry.getKey(), entry.getValue()));
+        }
+        Pair.sortListByB(reportList, attributeMeta.createComparator().reversed());
+        Formatter<T> formatter = attributeMeta.createFormatter();
+        for (Pair<String, T> pair : reportList) {
+            String name = pair.a;
+            T value = pair.b;
             String value_s = formatter.format(value);
             System.out.printf("%s: %s\n", name, value_s);
         }
+
     }
 
     public static void main(String[] args) {
