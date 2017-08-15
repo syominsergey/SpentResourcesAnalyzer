@@ -26,6 +26,9 @@ public class Params {
     @Option(name="--exclude", usage = "subcategory to exclude")
     public String exclude = null;
 
+    @Option(name = "--showEmptySubCategories", usage = "show sybcategories with zero attribute value")
+    public Boolean showEmptySubCategories = false;
+
     @Argument
     private List<String> arguments = new ArrayList<>();
 

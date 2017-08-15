@@ -49,6 +49,13 @@ public class MoneyAttributeMeta implements AttributeMeta<Integer> {
         return new ComparableComparator<>();
     }
 
+    private static final Integer ZERO = 0;
+
+    @Override
+    public boolean isZero(Integer value) {
+        return ZERO.equals(value);
+    }
+
     @Override
     public String toString() {
         return "MoneyAttributeMeta{" +

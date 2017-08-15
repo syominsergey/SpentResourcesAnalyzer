@@ -50,6 +50,9 @@ public class Main {
         for (Pair<String, T> pair : reportList) {
             String name = pair.a;
             T value = pair.b;
+            if(!params.showEmptySubCategories && attributeMeta.isZero(value)){
+                continue;
+            }
             String value_s = formatter.format(value);
             System.out.printf("%s: %s\n", name, value_s);
         }
