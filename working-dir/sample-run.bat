@@ -1,1 +1,2 @@
-java -Dfile.encoding=UTF-8 -Dlog4j.configuration="file:log4j.xml" -jar spent-resources-analyzer-jar-with-dependencies.jar --area Проект --attribute время --source sample.tsv --include Контекст-Работа
+chcp 866
+java -Dfile.encoding=CP866 -Dlog4j.configuration="file:log4j.xml" -jar spent-resources-analyzer-jar-with-dependencies.jar --area Проект --attribute время --source sample-7days.tsv --include Контекст-Работа
