@@ -1,0 +1,1 @@
+java -Dfile.encoding=UTF-8 -Dlog4j.configuration="file:log4j.xml" -jar spent-resources-analyzer-jar-with-dependencies.jar --area Проект --attribute время --source sample.tsv --include Контекст-Работа
