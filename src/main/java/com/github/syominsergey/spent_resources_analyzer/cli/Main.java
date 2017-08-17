@@ -42,9 +42,12 @@ public class Main {
         }
         Map<String, T> report = model.computeAttributeSumBySubCategories(attributeMeta, subCat, activityFilter);
         List<Pair<String, T>> reportList = new ArrayList<>();
+        Acc<T> acc = attributeMeta.createAcc();
         for (Map.Entry<String, T> entry : report.entrySet()) {
             reportList.add(new Pair<>(entry.getKey(), entry.getValue()));
+            acc.add(entry.getValue());
         }
+        T sum = acc.getSum();
         Pair.sortListByB(reportList, attributeMeta.createComparator().reversed());
         Formatter<T> formatter = attributeMeta.createFormatter();
         for (Pair<String, T> pair : reportList) {
@@ -54,7 +57,8 @@ public class Main {
                 continue;
             }
             String value_s = formatter.format(value);
-            System.out.printf("%s: %s\n", name, value_s);
+            double percentage = attributeMeta.divide(value, sum) * 100.0;
+            System.out.printf("%s: %s (%.2g%%)\n", name, value_s, percentage);
         }
 
     }

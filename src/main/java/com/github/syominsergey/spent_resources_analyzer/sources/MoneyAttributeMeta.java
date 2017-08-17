@@ -49,6 +49,11 @@ public class MoneyAttributeMeta implements AttributeMeta<Integer> {
         return new ComparableComparator<>();
     }
 
+    @Override
+    public double divide(Integer numerator, Integer denominator) {
+        return numerator.doubleValue() / denominator;
+    }
+
     private static final Integer ZERO = 0;
 
     @Override

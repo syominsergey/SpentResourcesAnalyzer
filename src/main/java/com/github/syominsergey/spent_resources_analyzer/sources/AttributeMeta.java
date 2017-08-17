@@ -12,5 +12,6 @@ public interface AttributeMeta<T> {
     ElementaryParser<T> createParser();
     Formatter<T> createFormatter();
     Comparator<T> createComparator();
+    double divide(T numerator, T denominator);
     boolean isZero(T value);
 }
